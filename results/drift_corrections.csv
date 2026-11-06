@@ -1,0 +1,37 @@
+target,variant,model,n_train,n_test,rmse,r2
+CO(GT),none (raw sensor signals),Linear regression,3145,4199,0.7910373224983698,0.7433561076444387
+CO(GT),none (raw sensor signals),Random forest,3145,4199,0.5935140174993956,0.8555229235854841
+CO(GT),none (raw sensor signals),Neural network (MLP),3145,4199,0.5827665505072607,0.8607079864524135
+CO(GT),log-log transform,Linear regression,3145,4199,0.9424136833106881,0.6357327305857247
+CO(GT),log-log transform,Random forest,3145,4199,0.6280997716449922,0.8381941367255565
+CO(GT),log-log transform,Neural network (MLP),3145,4199,0.8584716722571449,0.6977342624963051
+CO(GT),rolling-baseline normalisation,Linear regression,2985,4199,0.7986853075801819,0.7383694980012698
+CO(GT),rolling-baseline normalisation,Random forest,2985,4199,0.7576286950267456,0.7645764988693505
+CO(GT),rolling-baseline normalisation,Neural network (MLP),2985,4199,0.9136394709584071,0.6576371041639006
+CO(GT),elapsed-time feature,Linear regression,3145,4199,0.7104567381542436,0.7929800215749493
+CO(GT),elapsed-time feature,Random forest,3145,4199,0.6566039242731563,0.8231748920556243
+CO(GT),elapsed-time feature,Neural network (MLP),3145,4199,0.7090734803363207,0.7937853717536185
+NOx(GT),none (raw sensor signals),Linear regression,3324,4072,265.71981627035217,-0.3818918564537259
+NOx(GT),none (raw sensor signals),Random forest,3324,4072,249.680259243343,-0.22009763059324938
+NOx(GT),none (raw sensor signals),Neural network (MLP),3324,4072,264.27365625009406,-0.3668911040628353
+NOx(GT),log-log transform,Linear regression,3324,4072,205.37935276587461,0.17445693712560784
+NOx(GT),log-log transform,Random forest,3324,4072,256.08892189289793,-0.2835351136832389
+NOx(GT),log-log transform,Neural network (MLP),3324,4072,207.69486109752162,0.15573716302663354
+NOx(GT),rolling-baseline normalisation,Linear regression,3164,4072,249.3511358471171,-0.21688313529207548
+NOx(GT),rolling-baseline normalisation,Random forest,3164,4072,248.92898580925842,-0.21276627086977595
+NOx(GT),rolling-baseline normalisation,Neural network (MLP),3164,4072,244.85656154491758,-0.1734096719137701
+NOx(GT),elapsed-time feature,Linear regression,3324,4072,209.0238944141803,0.14489776694426415
+NOx(GT),elapsed-time feature,Random forest,3324,4072,253.14720138877647,-0.25421627381942824
+NOx(GT),elapsed-time feature,Neural network (MLP),3324,4072,206.13491277588147,0.1683716646469059
+NO2(GT),none (raw sensor signals),Linear regression,3321,4072,35.00227806805619,0.5209056115024642
+NO2(GT),none (raw sensor signals),Random forest,3321,4072,50.52384247976391,0.001791628575009474
+NO2(GT),none (raw sensor signals),Neural network (MLP),3321,4072,34.45586970459992,0.5357468108591648
+NO2(GT),log-log transform,Linear regression,3321,4072,32.68455971396827,0.5822526140733297
+NO2(GT),log-log transform,Random forest,3321,4072,54.09679406810239,-0.1443833210030443
+NO2(GT),log-log transform,Neural network (MLP),3321,4072,42.24038028703979,0.30227529333992154
+NO2(GT),rolling-baseline normalisation,Linear regression,3161,4072,43.8721144685167,0.24732828580162702
+NO2(GT),rolling-baseline normalisation,Random forest,3161,4072,46.55413882828488,0.15248955842358436
+NO2(GT),rolling-baseline normalisation,Neural network (MLP),3161,4072,39.502474416717014,0.3897931707870178
+NO2(GT),elapsed-time feature,Linear regression,3321,4072,61.949578887390516,-0.5007390384114312
+NO2(GT),elapsed-time feature,Random forest,3321,4072,54.12060093949093,-0.14539078112377823
+NO2(GT),elapsed-time feature,Neural network (MLP),3321,4072,34.12906181770085,0.5445117660676828

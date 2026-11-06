@@ -1,0 +1,22 @@
+target,model,Deployment split,Forward-chaining CV,Random 10-fold CV,ratio: Deployment split,ratio: Forward-chaining CV
+CO(GT),Gradient boosting,0.613,0.521,0.406,1.507,1.283
+CO(GT),Linear regression,0.791,0.519,0.483,1.638,1.076
+CO(GT),Neural network (MLP),0.583,0.531,0.415,1.403,1.279
+CO(GT),Quadratic ridge,0.835,0.557,0.422,1.978,1.32
+CO(GT),Random forest,0.593,0.497,0.408,1.452,1.218
+CO(GT),Support vector reg.,0.787,0.557,0.397,1.984,1.403
+CO(GT),k-nearest neighbours,0.721,0.576,0.412,1.751,1.398
+NO2(GT),Gradient boosting,53.095,25.667,17.972,2.954,1.428
+NO2(GT),Linear regression,35.002,27.163,23.234,1.507,1.169
+NO2(GT),Neural network (MLP),34.456,23.64,18.778,1.835,1.259
+NO2(GT),Quadratic ridge,58.405,26.264,19.475,2.999,1.349
+NO2(GT),Random forest,50.611,25.5,17.351,2.917,1.47
+NO2(GT),Support vector reg.,51.26,25.74,18.994,2.699,1.355
+NO2(GT),k-nearest neighbours,48.905,27.042,17.623,2.775,1.534
+NOx(GT),Gradient boosting,249.272,88.61,56.948,4.377,1.556
+NOx(GT),Linear regression,265.72,94.184,82.253,3.231,1.145
+NOx(GT),Neural network (MLP),264.274,79.397,55.6,4.753,1.428
+NOx(GT),Quadratic ridge,269.8,84.119,58.573,4.606,1.436
+NOx(GT),Random forest,249.287,87.382,54.724,4.555,1.597
+NOx(GT),Support vector reg.,278.066,112.337,73.16,3.801,1.535
+NOx(GT),k-nearest neighbours,263.43,104.518,54.437,4.839,1.92

@@ -1,0 +1,10 @@
+# Downloaded datasets and their extracted copies. Stage 1 fetches them from the
+# UCI Machine Learning Repository; they are not redistributed here.
+data/
+
+# Run logs
+run_log*.txt
+
+__pycache__/
+*.pyc
+.venv/

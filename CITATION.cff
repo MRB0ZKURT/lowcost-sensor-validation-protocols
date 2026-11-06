@@ -1,0 +1,40 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite both the software and the paper it accompanies."
+title: "Analysis code for: The validation protocol determines both the reported accuracy and the selected model in machine-learning calibration of low-cost gas sensor arrays"
+version: 1.0.0
+license: BSD-3-Clause
+type: software
+doi: 10.5281/zenodo.24021644
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.24021644
+    description: "Zenodo archive of this software version"
+authors:
+  - family-names: Bozkurt
+    given-names: "Mehmet Recep"
+    orcid: "https://orcid.org/0000-0003-0673-4454"
+    affiliation: "Department of Electrical and Electronics Engineering, Faculty of Engineering, Sakarya University, Sakarya, Türkiye"
+  - family-names: Bozkurt
+    given-names: Ferda
+    orcid: "https://orcid.org/0000-0002-8398-3780"
+    affiliation: "Sakarya Vocational School, Sakarya University of Applied Sciences, Sakarya, Türkiye"
+  - family-names: Bozkurt
+    given-names: "Ayşe Sabiha"
+    orcid: "https://orcid.org/0009-0009-4278-9111"
+    affiliation: "Department of Environmental Engineering, Faculty of Engineering, Sakarya University, Sakarya, Türkiye"
+keywords:
+  - low-cost sensor
+  - field calibration
+  - concept drift
+  - blocked cross-validation
+  - model selection
+  - air quality
+  - metal-oxide gas sensor
+  - reproducibility
+abstract: >-
+  Reproducible analysis pipeline comparing seven regression models under three
+  validation protocols on a one-year hourly co-location record of a low-cost
+  metal-oxide gas sensor array, with protocol-matched nested hyperparameter
+  search, a rolling-origin separation of deployment horizon from season, an
+  assessment against the EU data-quality objectives, and replication on an
+  independent 16-sensor array.
