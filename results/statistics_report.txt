@@ -4,6 +4,11 @@
   NO2(GT)   + 11.6 %/month (95 % CI   1.7 to  22.5), p=0.028 | season spread   121 %
   NOx(GT)   + 24.6 %/month (95 % CI   9.0 to  42.4), p=0.00685 | season spread   270 %
 
+[horizon slope, leaving out one training origin at a time]
+  CO(GT)      0.6 to   3.2 %/month over the 7 leave-one-origin-out fits
+  NO2(GT)     9.0 to  17.0 %/month over the 7 leave-one-origin-out fits
+  NOx(GT)    14.9 to  27.1 %/month over the 7 leave-one-origin-out fits
+
 [per-model horizon slope]
   NO2(GT)   Linear regression      +  9.2 %/month (p=0.104)
   NO2(GT)   Neural network (MLP)   +  6.0 %/month (p=0.228)

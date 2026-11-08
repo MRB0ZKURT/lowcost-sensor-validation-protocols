@@ -67,6 +67,17 @@ def horizon_effect() -> None:
             f"p={p:.3g} | season spread {season:5.0f} %")
     pd.DataFrame(rows).to_csv(RESULTS / "table_horizon_effect.csv", index=False)
 
+    say("\n[horizon slope, leaving out one training origin at a time]")
+    for target, g in ro.groupby("target"):
+        slopes = []
+        for o in sorted(g["origin"].unique()):
+            gg = g[g["origin"] != o]
+            mm = smf.ols("lr ~ horizon + C(test_month) + C(model)", data=gg).fit(
+                cov_type="cluster", cov_kwds={"groups": gg["origin"]})
+            slopes.append(100 * (np.exp(mm.params["horizon"]) - 1))
+        say(f"  {target:9s} {min(slopes):5.1f} to {max(slopes):5.1f} %/month "
+            f"over the {len(slopes)} leave-one-origin-out fits")
+
     say("\n[per-model horizon slope]")
     for target in ["NO2(GT)", "NOx(GT)"]:
         for mod, g in ro[ro.target == target].groupby("model"):
