@@ -1,20 +1,20 @@
 
 [horizon effect: log(RMSE) ~ horizon + C(test_month) + C(model), SE clustered by training origin]
-  CO(GT)    +  1.8 %/month (95 % CI  -1.5 to   5.2), p=0.301 | season spread    84 %
-  NO2(GT)   + 11.6 %/month (95 % CI   3.6 to  20.2), p=0.00397 | season spread   121 %
-  NOx(GT)   + 24.6 %/month (95 % CI  12.0 to  38.7), p=5.49e-05 | season spread   270 %
+  CO(GT)    +  1.8 %/month (95 % CI  -2.4 to   6.0), p=0.341 | season spread    84 %
+  NO2(GT)   + 11.6 %/month (95 % CI   1.7 to  22.5), p=0.028 | season spread   121 %
+  NOx(GT)   + 24.6 %/month (95 % CI   9.0 to  42.4), p=0.00685 | season spread   270 %
 
 [per-model horizon slope]
-  NO2(GT)   Linear regression      +  9.2 %/month (p=0.0556)
-  NO2(GT)   Neural network (MLP)   +  6.0 %/month (p=0.18)
-  NO2(GT)   Random forest          + 20.0 %/month (p=6.16e-05)
-  NOx(GT)   Linear regression      + 22.9 %/month (p=6.39e-05)
-  NOx(GT)   Neural network (MLP)   + 23.5 %/month (p=0.0363)
-  NOx(GT)   Random forest          + 27.5 %/month (p=1.69e-08)
+  NO2(GT)   Linear regression      +  9.2 %/month (p=0.104)
+  NO2(GT)   Neural network (MLP)   +  6.0 %/month (p=0.228)
+  NO2(GT)   Random forest          + 20.0 %/month (p=0.00707)
+  NOx(GT)   Linear regression      + 22.9 %/month (p=0.00714)
+  NOx(GT)   Neural network (MLP)   + 23.5 %/month (p=0.0812)
+  NOx(GT)   Random forest          + 27.5 %/month (p=0.00133)
 
 [protocol inflation, fixed hyperparameters: OLS on log(RMSE), SE clustered by target-model cell]
-  Deployment split                 x2.59 (95 % CI 2.14-3.14), p=8.77e-23
-  Forward-chaining CV              x1.24 (95 % CI 1.18-1.29), p=1.51e-19
+  Deployment split                 x2.59 (95 % CI 2.12-3.18), p=4.25e-09
+  Forward-chaining CV              x1.24 (95 % CI 1.18-1.30), p=1.67e-08
 
 [rank agreement between protocols, Spearman rho over the 7 models]
   CO(GT)    Random 10-fold CV  vs Deployment split             rho=+0.36
@@ -33,8 +33,8 @@
   NOx(GT)   Forward-chaining CV          W=28 p=0.0078 ratio median=1.54
 
 [protocol inflation, nested tuning: OLS on log(RMSE), SE clustered by target-model cell]
-  Deployment split (tuned)         x2.59 (95 % CI 2.13-3.16), p=2.61e-21
-  Forward-chaining CV (tuned)      x1.24 (95 % CI 1.18-1.30), p=3.11e-18
+  Deployment split (tuned)         x2.59 (95 % CI 2.10-3.20), p=7.74e-09
+  Forward-chaining CV (tuned)      x1.24 (95 % CI 1.18-1.30), p=3.07e-08
 
 [rank agreement between protocols, Spearman rho over the 7 models]
   CO(GT)    Random 5-fold CV ( vs Deployment split (tuned)     rho=+0.07

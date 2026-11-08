@@ -27,6 +27,22 @@ def say(*a):
     OUT.write(line + "\n")
 
 
+def cluster_quantile(n_clusters: int) -> float:
+    """Two-sided 97.5 % quantile of t with G-1 degrees of freedom.
+
+    Cluster-robust standard errors are asymptotic in the number of clusters.
+    With G as small as the seven training origins of the rolling-origin design,
+    the normal quantile is anti-conservative, so every interval and p value
+    computed from a clustered covariance below uses t(G-1) instead.
+    """
+    return float(stats.t.ppf(0.975, n_clusters - 1))
+
+
+def cluster_pvalue(b: float, se: float, n_clusters: int) -> float:
+    """Two-sided p value of b/se against t(G-1)."""
+    return float(2 * stats.t.sf(abs(b / se), n_clusters - 1))
+
+
 def horizon_effect() -> None:
     ro = pd.read_csv(RESULTS / "rolling_origin.csv")
     ro["lr"] = np.log(ro.rmse)
@@ -36,13 +52,16 @@ def horizon_effect() -> None:
     for target, g in ro.groupby("target"):
         m = smf.ols("lr ~ horizon + C(test_month) + C(model)", data=g).fit(
             cov_type="cluster", cov_kwds={"groups": g["origin"]})
-        b, se, p = m.params["horizon"], m.bse["horizon"], m.pvalues["horizon"]
-        lo, hi = b - 1.96 * se, b + 1.96 * se
+        b, se = m.params["horizon"], m.bse["horizon"]
+        G = int(g["origin"].nunique())
+        tq = cluster_quantile(G)
+        p = cluster_pvalue(b, se, G)
+        lo, hi = b - tq * se, b + tq * se
         mc = {k: v for k, v in m.params.items() if k.startswith("C(test_month)")}
         season = 100 * (np.exp(max(mc.values()) - min(mc.values())) - 1)
         rows.append(dict(target=target, pct_per_month=100 * (np.exp(b) - 1),
                          lo=100 * (np.exp(lo) - 1), hi=100 * (np.exp(hi) - 1),
-                         p=p, season_spread_pct=season, n=len(g)))
+                         p=p, season_spread_pct=season, n=len(g), n_clusters=G))
         say(f"  {target:9s} +{100*(np.exp(b)-1):5.1f} %/month "
             f"(95 % CI {100*(np.exp(lo)-1):5.1f} to {100*(np.exp(hi)-1):5.1f}), "
             f"p={p:.3g} | season spread {season:5.0f} %")
@@ -53,8 +72,10 @@ def horizon_effect() -> None:
         for mod, g in ro[ro.target == target].groupby("model"):
             m = smf.ols("lr ~ horizon + C(test_month)", data=g).fit(
                 cov_type="cluster", cov_kwds={"groups": g["origin"]})
+            p = cluster_pvalue(m.params["horizon"], m.bse["horizon"],
+                               int(g["origin"].nunique()))
             say(f"  {target:9s} {mod:22s} +{100*(np.exp(m.params['horizon'])-1):5.1f} "
-                f"%/month (p={m.pvalues['horizon']:.3g})")
+                f"%/month (p={p:.3g})")
 
 
 def protocol_inflation(path: str, reference: str, label: str) -> None:
@@ -67,9 +88,11 @@ def protocol_inflation(path: str, reference: str, label: str) -> None:
     for k in m.params.index:
         if "protocol" in k:
             b, se = m.params[k], m.bse[k]
+            G = int(r["cl"].nunique())
+            tq = cluster_quantile(G)
             say(f"  {k.split('T.')[1].rstrip(']'):32s} x{np.exp(b):.2f} "
-                f"(95 % CI {np.exp(b-1.96*se):.2f}-{np.exp(b+1.96*se):.2f}), "
-                f"p={m.pvalues[k]:.3g}")
+                f"(95 % CI {np.exp(b-tq*se):.2f}-{np.exp(b+tq*se):.2f}), "
+                f"p={cluster_pvalue(b, se, G):.3g}")
     g = r.pivot_table(index=["target", "model"], columns="protocol",
                       values="rmse", aggfunc="mean")
     for alt in [c for c in g.columns if c != reference]:

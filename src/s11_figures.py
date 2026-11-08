@@ -179,9 +179,11 @@ def fig5() -> None:
     proto = [("Random 10-fold CV", BLUE), ("Forward-chaining CV", ORANGE),
              ("Deployment split", DARK)]
     fig, axes = plt.subplots(1, 2, figsize=(6.6, 2.9))
-    spec = [("NO2(GT)", "Nitrogen dioxide (limit value 200 \u03bcg m$^{-3}$)"),
-            ("CO(GT)", "Carbon monoxide (limit value 10 mg m$^{-3}$)")]
-    for ax, (tgt, title) in zip(axes, spec):
+    # Directive (EU) 2024/2881, Annex V, Table 2: maximum uncertainty of
+    # indicative measurements is 25 % for hourly NO2 and 20 % for 8-hour CO.
+    spec = [("NO2(GT)", "Nitrogen dioxide (limit value 200 \u03bcg m$^{-3}$)", 25),
+            ("CO(GT)", "Carbon monoxide (limit value 10 mg m$^{-3}$)", 20)]
+    for ax, (tgt, title, dqo) in zip(axes, spec):
         x = np.arange(len(REPRESENTATIVE))
         w = 0.26
         for i, (pr, c) in enumerate(proto):
@@ -189,9 +191,11 @@ def fig5() -> None:
                      (reu.protocol == pr)].REU_pct_at_LV.iloc[0] for m in REPRESENTATIVE]
             ax.bar(x + (i - 1) * w, v, width=w, color=c,
                    label=pr if ax is axes[0] else None)
-        ax.axhline(25, color=RED, ls="--", lw=1.1,
-                   label="data-quality objective,\nindicative measurements (25%)"
+        ax.axhline(dqo, color=RED, ls="--", lw=1.1,
+                   label="data-quality objective,\nindicative measurements"
                    if ax is axes[0] else None)
+        ax.annotate(f"{dqo} %", xy=(0.015, dqo), xycoords=("axes fraction", "data"),
+                    ha="left", va="bottom", color=RED, fontsize=6.5)
         ax.set_ylim(top=ax.get_ylim()[1] * 1.18)
         ax.set_xticks(x)
         ax.set_xticklabels([SHORT[m].replace(" ", "\n") for m in REPRESENTATIVE])
