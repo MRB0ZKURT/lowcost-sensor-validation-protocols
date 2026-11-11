@@ -18,9 +18,9 @@
   NOx(GT)   Random forest          + 27.5 %/month (p=0.00133)
 
 [horizon x model interaction: joint Wald test of the interaction terms]
-  CO(GT)    F(2,6)= 0.47 p=0.647 | widest model gap   1.9 % per month
-  NO2(GT)   F(2,6)=18.34 p=0.00278 | widest model gap  15.1 % per month
-  NOx(GT)   F(2,6)= 1.38 p=0.322 | widest model gap   3.6 % per month
+  CO(GT)    F(2,6)= 0.47 p=0.647 | fastest   2.8 %/month vs slowest   0.8 %/month =   2.0 points (  1.9 % relative)
+  NO2(GT)   F(2,6)=18.34 p=0.00278 | fastest  21.8 %/month vs slowest   5.8 %/month =  16.0 points ( 15.1 % relative)
+  NOx(GT)   F(2,6)= 1.38 p=0.322 | fastest  27.2 %/month vs slowest  22.7 %/month =   4.5 points (  3.6 % relative)
 
 [Fig. 3 points: origins contributing to each horizon]
   h=1: 7, h=2: 6, h=3: 5, h=4: 4

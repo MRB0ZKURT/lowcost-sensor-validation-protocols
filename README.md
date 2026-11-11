@@ -106,8 +106,8 @@ If you use this code, please cite both the software archive and the paper:
 
 > Bozkurt, M. R., Bozkurt, F., and Bozkurt, A. S.: Analysis code for "The validation
 > protocol determines both the reported accuracy and the selected model in
-> machine-learning calibration of low-cost gas sensor arrays", v1.0.0, Zenodo,
-> https://doi.org/10.5281/zenodo.24021644, 2026.
+> machine-learning calibration of low-cost gas sensor arrays", v1.0.1, Zenodo,
+> https://doi.org/10.5281/zenodo.24146022, 2026.
 
 > Bozkurt, M. R., Bozkurt, F., and Bozkurt, A. S.: The validation protocol determines
 > both the reported accuracy and the selected model in machine-learning calibration of

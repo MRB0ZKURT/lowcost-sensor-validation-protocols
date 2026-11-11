@@ -113,15 +113,21 @@ def horizon_model_interaction() -> None:
         G = int(g["origin"].nunique())
         W = float(R @ b @ np.linalg.solve(R @ V @ R.T, R @ b) / q)
         p = float(stats.f.sf(W, q, G - 1))
-        # largest pairwise difference in slope between two models
+        # widest gap between two model slopes, in both the multiplicative and the
+        # percentage-point sense: exp(b) - 1 is the monthly growth of each model
         slopes = {"(reference)": m.params["horizon"]}
         for k in terms:
             slopes[k.split("T.")[1].rstrip("]")] = m.params["horizon"] + m.params[k]
-        spread = 100 * (np.exp(max(slopes.values()) - min(slopes.values())) - 1)
+        hi, lo = max(slopes.values()), min(slopes.values())
+        ratio_pct = 100 * (np.exp(hi - lo) - 1)          # fastest vs slowest, relative
+        points = 100 * (np.exp(hi) - np.exp(lo))         # difference in %/month
         rows.append(dict(target=target, F=W, df_num=q, df_den=G - 1, p=p,
-                         max_slope_gap_pct=spread))
-        say(f"  {target:9s} F({q},{G-1})={W:5.2f} p={p:.3g} | widest model gap "
-            f"{spread:5.1f} % per month")
+                         fastest_pct_per_month=100 * (np.exp(hi) - 1),
+                         slowest_pct_per_month=100 * (np.exp(lo) - 1),
+                         gap_points_per_month=points, gap_relative_pct=ratio_pct))
+        say(f"  {target:9s} F({q},{G-1})={W:5.2f} p={p:.3g} | fastest "
+            f"{100*(np.exp(hi)-1):5.1f} %/month vs slowest {100*(np.exp(lo)-1):5.1f} "
+            f"%/month = {points:5.1f} points ({ratio_pct:5.1f} % relative)")
     pd.DataFrame(rows).to_csv(RESULTS / "table_horizon_interaction.csv", index=False)
 
 
