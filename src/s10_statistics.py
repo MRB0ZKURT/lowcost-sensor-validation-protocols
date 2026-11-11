@@ -89,6 +89,55 @@ def horizon_effect() -> None:
                 f"%/month (p={p:.3g})")
 
 
+def horizon_model_interaction() -> None:
+    """Does the degradation rate differ between models? (Sect. 4.3)
+
+    A horizon x model interaction is fitted per target and the interaction
+    terms are tested jointly with a Wald statistic referred to F(q, G-1),
+    G being the seven training origins that the covariance is clustered on.
+    """
+    ro = pd.read_csv(RESULTS / "rolling_origin.csv")
+    ro["lr"] = np.log(ro.rmse)
+    say("\n[horizon x model interaction: joint Wald test of the interaction terms]")
+    rows = []
+    for target, g in ro.groupby("target"):
+        m = smf.ols("lr ~ horizon * C(model) + C(test_month)", data=g).fit(
+            cov_type="cluster", cov_kwds={"groups": g["origin"]})
+        terms = [k for k in m.params.index if ":" in k]
+        R = np.zeros((len(terms), len(m.params)))
+        for i, k in enumerate(terms):
+            R[i, list(m.params.index).index(k)] = 1.0
+        b = m.params.to_numpy()
+        V = np.asarray(m.cov_params())
+        q = len(terms)
+        G = int(g["origin"].nunique())
+        W = float(R @ b @ np.linalg.solve(R @ V @ R.T, R @ b) / q)
+        p = float(stats.f.sf(W, q, G - 1))
+        # largest pairwise difference in slope between two models
+        slopes = {"(reference)": m.params["horizon"]}
+        for k in terms:
+            slopes[k.split("T.")[1].rstrip("]")] = m.params["horizon"] + m.params[k]
+        spread = 100 * (np.exp(max(slopes.values()) - min(slopes.values())) - 1)
+        rows.append(dict(target=target, F=W, df_num=q, df_den=G - 1, p=p,
+                         max_slope_gap_pct=spread))
+        say(f"  {target:9s} F({q},{G-1})={W:5.2f} p={p:.3g} | widest model gap "
+            f"{spread:5.1f} % per month")
+    pd.DataFrame(rows).to_csv(RESULTS / "table_horizon_interaction.csv", index=False)
+
+
+def horizon_points() -> None:
+    """The means and standard errors drawn in Fig. 3, as a table (Sect. 4.3)."""
+    ro = pd.read_csv(RESULTS / "rolling_origin.csv")
+    t = (ro.groupby(["target", "model", "horizon"]).rmse
+           .agg(n_origins="count", mean_rmse="mean", sd="std").reset_index())
+    t["se"] = t.sd / np.sqrt(t.n_origins)
+    t.round(6).to_csv(RESULTS / "table_horizon_points.csv", index=False)
+    say("\n[Fig. 3 points: origins contributing to each horizon]")
+    say("  " + ", ".join(f"h={h}: {n}" for h, n in
+                         t[(t.target == "NO2(GT)") & (t.model == "Random forest")]
+                         [["horizon", "n_origins"]].to_numpy()))
+
+
 def protocol_inflation(path: str, reference: str, label: str) -> None:
     r = pd.read_csv(RESULTS / path)
     r["lr"] = np.log(r.rmse)
@@ -173,6 +222,8 @@ def hyperparameter_selection() -> None:
 
 def main() -> None:
     horizon_effect()
+    horizon_model_interaction()
+    horizon_points()
     g, ref = protocol_inflation("model_results_raw.csv", "Random 10-fold CV",
                                 "protocol inflation, fixed hyperparameters")
     ranking_and_tests(g, ref)

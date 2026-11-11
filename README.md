@@ -65,6 +65,8 @@ Stages write into `data/`, `results/` and `figures/` inside this repository.
 | 9 | `s09_vergara.py` | `vergara_protocols.csv` |
 | 10 | `s10_statistics.py` | `table_horizon_effect.csv`, `table_protocol_inflation.csv`, `table_tuned_summary.csv`, `table_bootstrap_ci.csv`, `statistics_report.txt` |
 | 11 | `s11_figures.py` | `fig1` … `fig6` at 300 dpi |
+| 12 | `s12_uncertainty_diagnostics.py` | `table_reu_sensitivity.csv`, `table_residual_scaling.csv`, `figA1` |
+| 13 | `s13_inner_validation.py` | `table_inner_validation.csv` |
 
 Dependencies between stages: 5 and 10 read the output of 2; 10 also reads 3 and 4;
 11 reads 2–9. Stages 1–9 are otherwise independent of one another.
@@ -95,7 +97,7 @@ code/
   LICENSE
   src/
     common.py           paths, variables, model factory, grids, metrics
-    s01_data.py … s11_figures.py
+    s01_data.py … s13_inner_validation.py
 ```
 
 ## Citation

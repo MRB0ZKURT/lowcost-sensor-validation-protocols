@@ -36,6 +36,10 @@ STAGES = [
     (9, "s09_vergara.py", "independent-array replication", "~8 min"),
     (10, "s10_statistics.py", "statistical inference", "<1 min"),
     (11, "s11_figures.py", "figures 1-6", "<1 min"),
+    (12, "s12_uncertainty_diagnostics.py",
+     "reference-uncertainty sensitivity, residual scaling, figure A1", "<1 min"),
+    (13, "s13_inner_validation.py",
+     "inner validation scheme under a common outer test", "~2 min"),
 ]
 
 
